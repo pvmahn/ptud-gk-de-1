@@ -1,17 +1,14 @@
-# Project: Flask-tiny-app
+# Project: Nodejs-tiny-app
 
 Họ và tên: Phạm Văn Mạnh <br>
 MSSV : 22642071
 
-## Mô tả project
+*Giới thiệu
+-Nodejs-tiny-app là một ứng dụng blog cá nhân đơn giản, cho phép người dùng tạo và chỉnh sửa bài viết của mình. Được thiết kế với ý tưởng từ các nền tảng mạng xã hội hiện đại, ứng dụng này cũng bao gồm một giao diện quản trị để quản lý người dùng và nội dung.
 
-Project này mang tên là Flask-tiny-app, đây là 1 project "tiny". Cụ thể, project này tập trung vào việc tạo ra 1 blog cá nhân đơn giản (lấy cảm hứng từ các mạng xã hội hiện nay). Trên nền tảng này, các bạn có thể tạo ra và chỉnh sửa bài viết của mình, cũng như có thể xem được bài viết của những người khác.
-
-Bên cạnh đó, cũng xây dựng 1 trang web dành cho admin nhằm giúp cho quản trị viên, người sáng lập ra nền tảng có thể quản lý user đang sử dụng nền tảng này.
-
-Các công nghệ được sử dụng trong project này:
-- Frontend: HTML, CSS, Bootstrap, Handlebars (template view engine)
-- Backend: ExpressJS, sqlite
+-Công nghệ sử dụng
+Frontend: HTML, CSS, Bootstrap, Handlebars
+Backend: ExpressJS, sqlite
 
 ## Cách cài đặt
 
