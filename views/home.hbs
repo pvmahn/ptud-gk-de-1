@@ -1,0 +1,103 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="mb-4">Bảng tin</h2>
+            
+            <div class="mb-3">
+                <button class="btn btn-primary me-2" data-filter="all">Tất cả bài viết</button>
+                <button class="btn btn-outline-primary" data-filter="my">Bài viết của tôi</button>
+            </div>
+
+            <!-- Posts will be loaded here -->
+            <div id="posts-container">
+                <!-- Posts will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.card {
+    border: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 1rem;
+}
+
+.post-content {
+    white-space: pre-wrap;
+}
+
+.post-image {
+    max-height: 400px;
+    object-fit: cover;
+    width: 100%;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', async function() {
+    const postsContainer = document.getElementById('posts-container');
+    let currentFilter = 'all';
+    
+    // Function to load posts
+    async function loadPosts(filter = 'all') {
+        try {
+            const url = filter === 'all' ? '/api/posts' : '/api/posts/my';
+            const response = await fetch(url);
+            const posts = await response.json();
+            
+            postsContainer.innerHTML = posts.map(post => `
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="me-3">
+                                <span class="avatar-text bg-primary rounded-circle d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px;">
+                                    ${post.author ? post.author[0].toUpperCase() : 'A'}
+                                </span>
+                            </div>
+                            <div>
+                                <h6 class="mb-0">${post.author || 'Anonymous'}</h6>
+                                <small class="text-muted">${new Date(post.created_at).toLocaleString()}</small>
+                            </div>
+                        </div>
+                        <p class="post-content">${post.content}</p>
+                        ${post.image ? `<img src="${post.image}" alt="Post image" class="post-image rounded">` : ''}
+                    </div>
+                </div>
+            `).join('');
+            
+        } catch (error) {
+            console.error('Error loading posts:', error);
+            postsContainer.innerHTML = `
+                <div class="alert alert-danger">
+                    Có lỗi xảy ra khi tải bài viết. Vui lòng thử lại sau.
+                </div>
+            `;
+        }
+    }
+
+    // Load posts initially
+    loadPosts();
+
+    // Handle filter buttons
+    document.querySelectorAll('.btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const filter = this.dataset.filter;
+            if (filter === currentFilter) return;
+            
+            currentFilter = filter;
+            
+            // Update active state
+            document.querySelectorAll('.btn').forEach(btn => {
+                btn.classList.remove('btn-primary');
+                btn.classList.add('btn-outline-primary');
+            });
+            this.classList.remove('btn-outline-primary');
+            this.classList.add('btn-primary');
+            
+            // Load filtered posts
+            loadPosts(filter);
+        });
+    });
+});
+</script> 

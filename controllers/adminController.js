@@ -17,6 +17,56 @@ const adminController = {
         console.log(users);
         res.render('admin', { users });
     },
+    getDashboard: async (req, res) => {
+        try {
+            // Lấy tổng số bài viết
+            const totalPosts = await dbAll('SELECT COUNT(*) as count FROM blogs', []);
+            
+            // Lấy tổng số người dùng
+            const totalUsers = await dbAll('SELECT COUNT(*) as count FROM user_accounts', []);
+            
+            // Lấy 5 bài viết mới nhất
+            const recentPosts = await dbAll(`
+                SELECT 
+                    blogs.id,
+                    blogs.author,
+                    blogs.content,
+                    blogs.image,
+                    blogs.created_at,
+                    blogs.updated_at,
+                    user_accounts.username,
+                    user_accounts.email
+                FROM blogs 
+                JOIN user_accounts ON blogs.author = user_accounts.username
+                ORDER BY blogs.created_at DESC 
+                LIMIT 5
+            `, []);
+            console.log(recentPosts);
+            
+            // Lấy thống kê bài viết theo tháng
+            const monthlyStats = await dbAll(`
+                SELECT 
+                    strftime('%Y-%m', created_at) as month,
+                    COUNT(*) as post_count
+                FROM blogs
+                GROUP BY strftime('%Y-%m', created_at)
+                ORDER BY month DESC
+                LIMIT 6
+            `, []);
+
+            console.log(monthlyStats);
+
+            res.render('dashboard', {
+                totalPosts: totalPosts[0].count,
+                totalUsers: totalUsers[0].count,
+                recentPosts,
+                monthlyStats
+            });
+        } catch (error) {
+            console.error('Dashboard error:', error);
+            res.status(500).json({ error: 'Internal server error' });
+        }
+    },
     resetPassword: async (req, res) => {
         //băm mật khẩu và thêm muối
         const salt = await bcrypt.genSalt(10);

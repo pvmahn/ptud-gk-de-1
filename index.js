@@ -52,7 +52,18 @@ const hbs = exphbs.create({
          }
          return accum;
       },
-
+      json: function(context) {
+         return JSON.stringify(context);
+      },
+      formatMonth: function(monthStr) {
+         const [year, month] = monthStr.split('-');
+         const date = new Date(year, parseInt(month) - 1);
+         return date.toLocaleString('vi-VN', { month: 'long', year: 'numeric' });
+      },
+      calculatePercentage: function(count, total) {
+         if (!total) return 0;
+         return Math.round((count / total) * 100);
+      },
       //feature for admin page
       extractId: (id) => {
          return id.toString().slice(-6, -1);
