@@ -12,7 +12,7 @@ Các công nghệ được sử dụng trong project này: - Frontend: HTML, CSS
 
 ## Cách cài đặt
 
-1.Vào github repository: https://github.com/pgkiet27/ptud-gk-de-1.git
+1.Vào github repository: https://github.com/pvmahn/ptud-gk-de-1.git
 
 2. Nhấn vào nút Code (màu xanh) và copy đường dẫn HTTPS
 
