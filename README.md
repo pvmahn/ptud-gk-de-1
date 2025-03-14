@@ -9,7 +9,8 @@ Project này mang tên là Flask-tiny-app, đây là 1 project "tiny". Cụ th�
 
 Bên cạnh đó, cũng xây dựng 1 trang web dành cho admin nhằm giúp cho quản trị viên, người sáng lập ra nền tảng có thể quản lý user đang sử dụng nền tảng này.
 
-Các công nghệ được sử dụng trong project này: - Frontend: HTML, CSS, Bootstrap, Handlebars (template view engine)
+Các công nghệ được sử dụng trong project này:
+- Frontend: HTML, CSS, Bootstrap, Handlebars (template view engine)
 - Backend: ExpressJS, sqlite
 
 ## Cách cài đặt
