@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const email = document.getElementById("email").value.trim();
         const password = document.getElementById("password").value;
         const confirmPassword = document.getElementById("confirmPassword").value;
+        const role = document.getElementById("role").value;
 
         console.log(typeof (password));
 
@@ -22,7 +23,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 body: JSON.stringify({
                     "username": username,
                     "email": email,
-                    "password": password
+                    "password": password,
+                    "role": role
                 })
             });
 

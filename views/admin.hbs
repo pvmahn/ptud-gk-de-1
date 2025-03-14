@@ -57,27 +57,25 @@
                                 <td>{{this.email}}</td>
                                 <td>{{formatCreateUserDate this.created_at}}</td>
                                 <td>
-                                    {{#if (eq this.block 0)}}
-                                    <span class="badge bg-success">Hoạt động</span>
-                                    {{else}}
-                                    <span class="badge bg-danger">Vô hiệu hóa</span>
-                                    {{/if}}
+                                    <select class="form-select role-select" data-user-id="{{this.id}}">
+                                        <option value="viewer" {{#if (eq this.role "viewer")}}selected{{/if}}>Viewer</option>
+                                        <option value="collaborator" {{#if (eq this.role "collaborator")}}selected{{/if}}>Collaborator</option>
+                                        <option value="editor" {{#if (eq this.role "editor")}}selected{{/if}}>Editor</option>
+                                    </select>
                                 </td>
                                 <td>
-                                    <div class="btn-group" role="group">
-                                        <button class="btn btn-sm btn-warning btn-reset-password" data-user-id={{this.id}}>
-                                            <i class="bi bi-key"></i> Reset MK
-                                        </button>
-                                        {{#if (eq this.block 0)}}
-                                        <button class="btn btn-sm btn-danger btn-block-user" data-user-id={{this.id}}>
-                                            <i class="bi bi-lock"></i> Khóa
-                                        </button>
-                                        {{else}}
-                                        <button class="btn btn-sm btn-success btn-block-user" data-user-id={{this.id}}>
-                                            <i class="bi bi-lock"></i> Mở khóa
-                                        </button>
-                                        {{/if}}
-                                    </div>
+                                    {{#if this.block}}
+                                    <button class="btn btn-success unblock-btn" data-user-id="{{this.id}}">
+                                        <i class="bi bi-unlock"></i>
+                                    </button>
+                                    {{else}}
+                                    <button class="btn btn-danger block-btn" data-user-id="{{this.id}}">
+                                        <i class="bi bi-lock"></i>
+                                    </button>
+                                    {{/if}}
+                                    <button class="btn btn-warning reset-password-btn" data-username="{{this.username}}">
+                                        <i class="bi bi-key"></i>
+                                    </button>
                                 </td>
                             </tr>
                         {{/each}}
@@ -148,4 +146,32 @@
     <script src="/js/handleAccountOperation.js"></script>
     <script src="/js/handleLockAccount.js"></script>
     <script src="/js/handleFilterOperation.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Xử lý thay đổi role
+            $('.role-select').change(function() {
+                const userId = $(this).data('user-id');
+                const newRole = $(this).val();
+                
+                $.ajax({
+                    url: '/admin/api/change-role',
+                    method: 'POST',
+                    data: {
+                        userId: userId,
+                        newRole: newRole
+                    },
+                    success: function(response) {
+                        toastr.success('Thay đổi role thành công');
+                    },
+                    error: function(error) {
+                        toastr.error('Có lỗi xảy ra khi thay đổi role');
+                        console.error('Error:', error);
+                    }
+                });
+            });
+
+            // Các xử lý khác giữ nguyên
+            // ... existing code ...
+        });
+    </script>
 </body>

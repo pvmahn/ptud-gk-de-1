@@ -27,6 +27,57 @@
             font-size: 0.9rem;
             padding: 0.4rem 1rem;
         }
+
+        /* CSS cho sidebar */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            padding: 80px 0 0;
+            box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+        }
+
+        .sidebar-sticky {
+            position: relative;
+            top: 0;
+            height: calc(100vh - 80px);
+            padding-top: .5rem;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        .sidebar .nav-link {
+            font-weight: 500;
+            color: #333;
+            padding: 0.5rem 1rem;
+        }
+
+        .sidebar .nav-link:hover {
+            color: #0d6efd;
+        }
+
+        .sidebar .nav-link.active {
+            color: #0d6efd;
+        }
+
+        .sidebar .nav-link i {
+            margin-right: 0.5rem;
+        }
+
+        .sidebar-heading {
+            font-size: .75rem;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 767.98px) {
+            .sidebar {
+                position: static;
+                padding-top: 0;
+            }
+        }
+
         /* CSS cho chức năng tải ảnh */
         .image-upload-container {
             display: flex;
@@ -110,126 +161,211 @@
     </nav>
 
     <!-- Main Content -->
-    <div class="container">
-        <h2 class="text-center mb-4">Bảng tin</h2>
-        
-        <!-- Tạo bài viết mới -->
-        <div class="card new-post-card">
-            <div class="card-body">
-                <div class="d-flex align-items-center mb-3">
-                    <div class="avatar bg-primary me-2">{{firstLetterInUsername usernameCookie}}</div>
-                    <p id="user-name" class="mb-0">{{usernameCookie}}</p>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+                <div class="position-sticky pt-3">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">
+                                <i class="bi bi-house-door me-2"></i>
+                                Trang chủ
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="bi bi-bookmark me-2"></i>
+                                Bài viết đã lưu
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="bi bi-person me-2"></i>
+                                Bài viết của tôi
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="bi bi-bell me-2"></i>
+                                Thông báo
+                            </a>
+                        </li>
+                    </ul>
+
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                        <span>Danh mục</span>
+                    </h6>
+                    <ul class="nav flex-column mb-3">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="bi bi-hash me-2"></i>
+                                Công nghệ
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="bi bi-hash me-2"></i>
+                                Cuộc sống
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="bi bi-hash me-2"></i>
+                                Giải trí
+                            </a>
+                        </li>
+                    </ul>
+
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                        <span>Bài viết nổi bật</span>
+                    </h6>
+                    <ul class="nav flex-column mb-3">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="bi bi-fire me-2"></i>
+                                Xu hướng
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="bi bi-star me-2"></i>
+                                Được đánh giá cao
+                            </a>
+                        </li>
+                    </ul>
                 </div>
-                <textarea id='postContent' class="form-control mb-3" rows="3" placeholder="Bạn đang nghĩ gì?"></textarea>
-                
-                <!-- Preview ảnh đã chọn -->
-                <img id="imagePreview" class="upload-preview mb-3" src="#" alt="Ảnh bài viết">
-                
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <label for="imageUpload" class="image-upload-btn">
-                            <i class="bi bi-image me-1"></i>Thêm ảnh
-                        </label>
-                        <input type="file" id="imageUpload" accept="image/*" style="display: none">
-                        <span id="removeImage" class="remove-image-btn">
-                            <i class="bi bi-x-circle"></i> Xóa ảnh
-                        </span>
+            </div>
+
+            <!-- Main content -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div class="container">
+                    <h2 class="text-center mb-4">Bảng tin</h2>
+                    
+                    <!-- Tạo bài viết mới -->
+                    <div class="card new-post-card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="avatar bg-primary me-2">{{firstLetterInUsername usernameCookie}}</div>
+                                <p id="user-name" class="mb-0">{{usernameCookie}}</p>
+                            </div>
+                            <textarea id='postContent' class="form-control mb-3" rows="3" placeholder="Bạn đang nghĩ gì?"></textarea>
+                            
+                            <!-- Preview ảnh đã chọn -->
+                            <img id="imagePreview" class="upload-preview mb-3" src="#" alt="Ảnh bài viết">
+                            
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <label for="imageUpload" class="image-upload-btn">
+                                        <i class="bi bi-image me-1"></i>Thêm ảnh
+                                    </label>
+                                    <input type="file" id="imageUpload" accept="image/*" style="display: none">
+                                    <span id="removeImage" class="remove-image-btn">
+                                        <i class="bi bi-x-circle"></i> Xóa ảnh
+                                    </span>
+                                </div>
+                                <button id="submitPost" class="btn btn-primary"><i class="bi bi-send me-1"></i>Đăng bài</button>
+                            </div>
+                        </div>
                     </div>
-                    <button id="submitPost" class="btn btn-primary"><i class="bi bi-send me-1"></i>Đăng bài</button>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Nút lọc bài viết -->
-        <div class="filter-buttons text-center">
-            <div class="btn-group" role="group" aria-label="Filter posts">
-                <button type="button" class="btn btn-outline-primary filter-active" id="showAllPosts">Tất cả bài viết</button>
-                <button type="button" class="btn btn-outline-primary" id="showMyPosts">Bài viết của tôi</button>
-            </div>
-        </div>
-        
-        <!-- Danh sách bài viết -->
-        <div class="posts-container">
-            {{#if blogs.length}}
-                {{#each blogs}}
-                    {{#if (eq this.author ../usernameCookie)}}
-                        <div class="card post-card post-current-user" data-author="current" id={{fromObjectToString this.id}}>
-                            <div class="card-body position-relative">
-                                <!-- Nút menu cho bài viết của mình -->
-                                <div class="post-menu dropdown">
-                                    <button class="post-menu-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="bi bi-three-dots-vertical"></i>
-                                    </button>
-                                    <ul class="dropdown-menu dropdown-menu-end">
-                                        <li><a class="dropdown-item edit-post-btn" href="#" data-post-id={{fromObjectToString this.id}}><i class="bi bi-pencil me-2"></i>Chỉnh sửa</a></li>
-                                        <li><a class="dropdown-item text-danger delete-post-btn" href="#" data-post-id={{fromObjectToString this.id}} data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bi bi-trash me-2"></i>Xóa</a></li>
-                                    </ul>
-                                </div>
-                                
-                                <div class="post-header">
-                                    <div class="avatar bg-primary">{{firstLetterInUsername this.author}}</div>
-                                    <div>
-                                        <p class="post-author">{{this.author}}</p>
-                                        <p class="post-date">{{formatDate this.created_at}}</p>
-                                    </div>
-                                </div>
-                                <div class="post-content">
-                                    <p class="post-text">{{this.content}}</p>
-                                    {{#if this.image}}
-                                        <img src="..{{this.image}}" alt="Ảnh bài viết" class="img-fluid">
-                                    {{/if}}
-                                    
-                                    <!-- Form chỉnh sửa bài viết (ban đầu ẩn) -->
-                                    <div class="editing-controls" id="editing-controls-{{fromObjectToString this.id}}">
-                                        <textarea class="form-control mb-2 edit-textarea">{{this.content}}</textarea>
-                                        <div class="d-flex justify-content-end gap-2">
-                                            <button class="btn btn-secondary btn-sm cancel-edit-btn" data-post-id={{fromObjectToString this.id}}>Hủy</button>
-                                            <button class="btn btn-primary btn-sm save-edit-btn" data-post-id={{fromObjectToString this.id}}>Lưu</button>
+                    
+                    <!-- Nút lọc bài viết -->
+                    <div class="filter-buttons text-center">
+                        <div class="btn-group" role="group" aria-label="Filter posts">
+                            <button type="button" class="btn btn-outline-primary filter-active" id="showAllPosts">Tất cả bài viết</button>
+                            <button type="button" class="btn btn-outline-primary" id="showMyPosts">Bài viết của tôi</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Danh sách bài viết -->
+                    <div class="posts-container">
+                        {{#if blogs.length}}
+                            {{#each blogs}}
+                                {{#if (eq this.author ../usernameCookie)}}
+                                    <div class="card post-card post-current-user" data-author="current" id={{fromObjectToString this.id}}>
+                                        <div class="card-body position-relative">
+                                            <!-- Nút menu cho bài viết của mình -->
+                                            <div class="post-menu dropdown">
+                                                <button class="post-menu-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="bi bi-three-dots-vertical"></i>
+                                                </button>
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                    {{#if (or (eq ../userRole "collaborator") (eq ../userRole "editor"))}}
+                                                    <li><a class="dropdown-item edit-post-btn" href="#" data-post-id={{fromObjectToString this.id}}><i class="bi bi-pencil me-2"></i>Chỉnh sửa</a></li>
+                                                    {{/if}}
+                                                    {{#if (eq ../userRole "editor")}}
+                                                    <li><a class="dropdown-item text-danger delete-post-btn" href="#" data-post-id={{fromObjectToString this.id}} data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bi bi-trash me-2"></i>Xóa</a></li>
+                                                    {{/if}}
+                                                </ul>
+                                            </div>
+                                            
+                                            <div class="post-header">
+                                                <div class="avatar bg-primary">{{firstLetterInUsername this.author}}</div>
+                                                <div>
+                                                    <p class="post-author">{{this.author}}</p>
+                                                    <p class="post-date">{{formatDate this.created_at}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="post-content">
+                                                <p class="post-text">{{this.content}}</p>
+                                                {{#if this.image}}
+                                                    <img src="..{{this.image}}" alt="Ảnh bài viết" class="img-fluid">
+                                                {{/if}}
+                                                
+                                                <!-- Form chỉnh sửa bài viết (ban đầu ẩn) -->
+                                                <div class="editing-controls" id="editing-controls-{{fromObjectToString this.id}}">
+                                                    <textarea class="form-control mb-2 edit-textarea">{{this.content}}</textarea>
+                                                    <div class="d-flex justify-content-end gap-2">
+                                                        <button class="btn btn-secondary btn-sm cancel-edit-btn" data-post-id={{fromObjectToString this.id}}>Hủy</button>
+                                                        <button class="btn btn-primary btn-sm save-edit-btn" data-post-id={{fromObjectToString this.id}}>Lưu</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="post-actions">
+                                                <div class="d-flex justify-content-between">
+                                                    <a href="#" class="action-btn"><i class="bi bi-hand-thumbs-up me-1"></i>Thích</a>
+                                                    <a href="#" class="action-btn"><i class="bi bi-chat-dots me-1"></i>Bình luận</a>
+                                                    <a href="#" class="action-btn"><i class="bi bi-share me-1"></i>Chia sẻ</a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="post-actions">
-                                    <div class="d-flex justify-content-between">
-                                        <a href="#" class="action-btn"><i class="bi bi-hand-thumbs-up me-1"></i>Thích</a>
-                                        <a href="#" class="action-btn"><i class="bi bi-chat-dots me-1"></i>Bình luận</a>
-                                        <a href="#" class="action-btn"><i class="bi bi-share me-1"></i>Chia sẻ</a>
+                                {{else}}
+                                    <div class="card post-card post-other-user" data-author="other">
+                                        <div class="card-body">
+                                            <div class="post-header">
+                                                <div class="avatar bg-danger">{{firstLetterInUsername this.author}}</div>
+                                                <div>
+                                                    <p class="post-author">{{this.author}}</p>
+                                                    <p class="post-date">{{formatDate this.created_at}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="post-content">
+                                                <p>{{this.content}}</p>
+                                                {{#if this.image}}
+                                                    <img src="..{{this.image}}" alt="Ảnh bài viết" class="img-fluid">
+                                                {{/if}}
+                                            </div>
+                                            <div class="post-actions">
+                                                <div class="d-flex justify-content-between">
+                                                    <a href="#" class="action-btn"><i class="bi bi-hand-thumbs-up me-1"></i>Thích</a>
+                                                    <a href="#" class="action-btn"><i class="bi bi-chat-dots me-1"></i>Bình luận</a>
+                                                    <a href="#" class="action-btn"><i class="bi bi-share me-1"></i>Chia sẻ</a>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
+                                {{/if}}
+                            {{/each}}
+                        {{else}}
+                            <div class="text-center text-muted my-5">
+                                <i class="bi bi-journal-text fs-1"></i>
+                                <p class="mt-3">Chưa có bài viết nào. Hãy là người đầu tiên chia sẻ!</p>
                             </div>
-                        </div>
-                    {{else}}
-                        <div class="card post-card post-other-user" data-author="other">
-                            <div class="card-body">
-                                <div class="post-header">
-                                    <div class="avatar bg-danger">{{firstLetterInUsername this.author}}</div>
-                                    <div>
-                                        <p class="post-author">{{this.author}}</p>
-                                        <p class="post-date">{{formatDate this.created_at}}</p>
-                                    </div>
-                                </div>
-                                <div class="post-content">
-                                    <p>{{this.content}}</p>
-                                    {{#if this.image}}
-                                        <img src="..{{this.image}}" alt="Ảnh bài viết" class="img-fluid">
-                                    {{/if}}
-                                </div>
-                                <div class="post-actions">
-                                    <div class="d-flex justify-content-between">
-                                        <a href="#" class="action-btn"><i class="bi bi-hand-thumbs-up me-1"></i>Thích</a>
-                                        <a href="#" class="action-btn"><i class="bi bi-chat-dots me-1"></i>Bình luận</a>
-                                        <a href="#" class="action-btn"><i class="bi bi-share me-1"></i>Chia sẻ</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    {{/if}}
-                {{/each}}
-            {{else}}
-                <div class="text-center text-muted my-5">
-                    <i class="bi bi-journal-text fs-1"></i>
-                    <p class="mt-3">Chưa có bài viết nào. Hãy là người đầu tiên chia sẻ!</p>
+                        {{/if}}
+                    </div>
                 </div>
-            {{/if}}
+            </main>
         </div>
     </div>
 

@@ -17,56 +17,6 @@ const adminController = {
         console.log(users);
         res.render('admin', { users });
     },
-    getDashboard: async (req, res) => {
-        try {
-            // Lấy tổng số bài viết
-            const totalPosts = await dbAll('SELECT COUNT(*) as count FROM blogs', []);
-            
-            // Lấy tổng số người dùng
-            const totalUsers = await dbAll('SELECT COUNT(*) as count FROM user_accounts', []);
-            
-            // Lấy 5 bài viết mới nhất
-            const recentPosts = await dbAll(`
-                SELECT 
-                    blogs.id,
-                    blogs.author,
-                    blogs.content,
-                    blogs.image,
-                    blogs.created_at,
-                    blogs.updated_at,
-                    user_accounts.username,
-                    user_accounts.email
-                FROM blogs 
-                JOIN user_accounts ON blogs.author = user_accounts.username
-                ORDER BY blogs.created_at DESC 
-                LIMIT 5
-            `, []);
-            console.log(recentPosts);
-            
-            // Lấy thống kê bài viết theo tháng
-            const monthlyStats = await dbAll(`
-                SELECT 
-                    strftime('%Y-%m', created_at) as month,
-                    COUNT(*) as post_count
-                FROM blogs
-                GROUP BY strftime('%Y-%m', created_at)
-                ORDER BY month DESC
-                LIMIT 6
-            `, []);
-
-            console.log(monthlyStats);
-
-            res.render('dashboard', {
-                totalPosts: totalPosts[0].count,
-                totalUsers: totalUsers[0].count,
-                recentPosts,
-                monthlyStats
-            });
-        } catch (error) {
-            console.error('Dashboard error:', error);
-            res.status(500).json({ error: 'Internal server error' });
-        }
-    },
     resetPassword: async (req, res) => {
         //băm mật khẩu và thêm muối
         const salt = await bcrypt.genSalt(10);
@@ -102,6 +52,26 @@ const adminController = {
         
         if (!user) return res.status(404).json("Error happened");
         else return res.status(200).json("Block user successfully!");
+    },
+    changeUserRole: async (req, res) => {
+        const { userId, newRole } = req.body;
+        
+        // Kiểm tra role hợp lệ
+        const validRoles = ['viewer', 'collaborator', 'editor'];
+        if (!validRoles.includes(newRole)) {
+            return res.status(400).json({ error: "Role không hợp lệ" });
+        }
+
+        try {
+            await dbRun(
+                'UPDATE user_accounts SET role = ? WHERE id = ?',
+                [newRole, userId]
+            );
+            return res.status(200).json({ message: "Thay đổi role thành công" });
+        } catch (error) {
+            console.error('Lỗi khi thay đổi role:', error);
+            return res.status(500).json({ error: "Lỗi khi thay đổi role" });
+        }
     }
 }
 

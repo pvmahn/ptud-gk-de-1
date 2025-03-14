@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 const db = require('./config/database');
 const router = require('./routes/index');
 const createAccountTable = require('./models/accountModel');
-const createBlogTable = require('./models/blogModel');
+const { createBlogTable, canViewBlog, canEditBlog, canDeleteBlog } = require('./models/blogModel');
 
 const app = express();
 
@@ -26,6 +26,9 @@ const hbs = exphbs.create({
       },
       eq: function (a, b) {
          return a === b;
+      },
+      or: function() {
+         return Array.prototype.slice.call(arguments, 0, -1).some(Boolean);
       },
       formatDate: (date) => {
          const now = new Date();
@@ -73,6 +76,15 @@ const hbs = exphbs.create({
          const datePart = new Date(date).toLocaleDateString("vi-VN", { day: "2-digit", month: "2-digit", year: "2-digit" })
 
          return `${datePart}, ${timePart}`
+      },
+      canViewBlog: function(userRole) {
+         return canViewBlog(userRole);
+      },
+      canEditBlog: function(userRole) {
+         return canEditBlog(userRole);
+      },
+      canDeleteBlog: function(userRole) {
+         return canDeleteBlog(userRole);
       },
    }
 });

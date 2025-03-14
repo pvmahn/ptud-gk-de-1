@@ -14,9 +14,15 @@ const authController = {
             const salt = await bcrypt.genSalt(10);
             const hashed = await bcrypt.hash(req.body.password, salt);
 
+            // Kiểm tra role hợp lệ
+            const validRoles = ['viewer', 'collaborator', 'editor'];
+            if (!validRoles.includes(req.body.role)) {
+                return res.status(400).json({ error: 'Role không hợp lệ' });
+            }
+
             await db.run(
-                'INSERT INTO user_accounts (username, email, password) VALUES (?, ?, ?)',
-                [req.body.username, req.body.email, hashed],
+                'INSERT INTO user_accounts (username, email, password, role) VALUES (?, ?, ?, ?)',
+                [req.body.username, req.body.email, hashed, req.body.role],
                 function (err) {
                   if (err) {
                     console.error('Lỗi khi tạo tài khoản:', err.message);
@@ -28,8 +34,6 @@ const authController = {
         } catch (err) {
             res.status(500).json(err);
         }
-
-
     },
     login: (req, res) => {
         res.render('login');
@@ -64,18 +68,21 @@ const authController = {
         );
 
         if (!validation) return res.status(404).json("Wrong password!");
-        /**
-         * A cookie with the Secure attribute is only sent to the server with an encrypted request over the HTTPS protocol. 
-         * It's never sent with unsecured HTTP (except on localhost)
-         * Do đó, khi deploy lên cloud thì nên bỏ thuộc tính secure, hoặc nếu vẫn dùng thì sử dụng HTTPS qua nginx ...
-         */
+
         if (user && validation) {
+            // Lưu username và role vào cookie
             res.cookie('username', req.body.username, {
                 maxAge: 60 * 1000 * 1000,
                 httpOnly: true,
                 secure: true,
                 path: '/',
-            })
+            });
+            res.cookie('userRole', user.role || 'viewer', {
+                maxAge: 60 * 1000 * 1000,
+                httpOnly: true,
+                secure: true,
+                path: '/',
+            });
             return res.status(200).json("Login successfully!")
         }
     },

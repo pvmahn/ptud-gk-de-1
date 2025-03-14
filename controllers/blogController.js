@@ -2,6 +2,7 @@ const db = require('../config/database');
 const { promisify } = require('util');
 const dbAll = promisify(db.all.bind(db));
 const multer = require('multer');
+const { createBlogTable, canViewBlog, canEditBlog, canDeleteBlog } = require('../models/blogModel');
 
 var page = undefined;
 
@@ -19,7 +20,10 @@ const blogController = {
           });
 
         const usernameCookie = req.cookies.username;
-        //.lean() dùng để giúp cho handlebars có thể hiển thị dữ liệu 
+        
+        // Lấy thông tin role của user
+        const userRole = await dbAll('SELECT role FROM user_accounts WHERE username = ?', [usernameCookie]);
+        const userRoleValue = userRole[0]?.role || 'viewer';
 
         // tính toán số lượng trang để phân
         const itemsPerPages = 10;
@@ -28,20 +32,15 @@ const blogController = {
         //kiểm tra trang
         console.log(page, numberOfPages);
         if (!page) {
-            return res.render('blog', { blogs, usernameCookie, numberOfPages });
+            return res.render('blog', { blogs, usernameCookie, numberOfPages, userRole: userRoleValue });
         }
         else {
             const start = (page - 1) * itemsPerPages;
             const end = start + itemsPerPages;
 
             newBlogs = blogs.slice(start, end);
-            // console.log(newBlogs);
-            // page = undefined;
-            return res.render('blog', { newBlogs, usernameCookie, numberOfPages, page });
+            return res.render('blog', { newBlogs, usernameCookie, numberOfPages, page, userRole: userRoleValue });
         }
-
-        
-
     },
     showBlogWithPagination: async (req, res) => {
         page = req.body.page;
@@ -102,5 +101,32 @@ const blogController = {
     }
 
 }
+
+// Middleware kiểm tra quyền xem bài viết
+const checkViewPermission = (req, res, next) => {
+    const userRole = req.user.role;
+    if (!canViewBlog(userRole)) {
+        return res.status(403).json({ message: 'Bạn không có quyền xem bài viết này' });
+    }
+    next();
+};
+
+// Middleware kiểm tra quyền chỉnh sửa bài viết
+const checkEditPermission = (req, res, next) => {
+    const userRole = req.user.role;
+    if (!canEditBlog(userRole)) {
+        return res.status(403).json({ message: 'Bạn không có quyền chỉnh sửa bài viết này' });
+    }
+    next();
+};
+
+// Middleware kiểm tra quyền xóa bài viết
+const checkDeletePermission = (req, res, next) => {
+    const userRole = req.user.role;
+    if (!canDeleteBlog(userRole)) {
+        return res.status(403).json({ message: 'Bạn không có quyền xóa bài viết này' });
+    }
+    next();
+};
 
 module.exports = blogController
