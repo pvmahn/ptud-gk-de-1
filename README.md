@@ -1,4 +1,4 @@
-# Project: Nodejs-tiny-app
+# Project THI GIỮA KÌ: Nodejs-tiny-app
 
 Họ và tên: Phạm Văn Mạnh <br>
 MSSV : 22642071
