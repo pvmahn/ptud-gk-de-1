@@ -1,6 +1,6 @@
 # Project: Flask-tiny-app
 
-Họ và tên: Phạm Văn Mạnh 
+Họ và tên: Phạm Văn Mạnh <br>
 MSSV : 22642071
 
 ## Mô tả project
