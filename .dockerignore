@@ -1,0 +1,5 @@
+# ban đầu, copy package.json -> chạy lệnh npm install -> node_modules sẽ được cấu hình theo Linux
+# Trong quá tình copy tất cả files từ windows vào trong docker -> node_modules dạng Linux sẽ bị ghi đè sang dạng Windows
+# mà cấu hình dạng Windows sẽ k chạy được trên môi trường Linux -> phải loại bỏ node_modules khỏi việc đồng bộ
+node_modules/
+dist/

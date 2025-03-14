@@ -1,0 +1,36 @@
+services:
+  node-app:
+    build: . # Nó sẽ tự động dò Dockerfile
+    ports:
+      - "5500:5500"
+    volumes:
+      - ./:/blog-app # Đồng bộ hóa file giữa local với container
+      - node_modules:/blog-app/node_modules
+    environment:
+      - PORT=5500
+      - MONGO_URL=mongodb://mongo:27017/blog-app # Thêm URL kết nối tới MongoDB
+    depends_on:
+      - mongo
+    networks:
+      - blog-network
+
+  mongo:
+    image: mongo
+    ports:
+      - "27018:27017"
+    # environment:
+    #   - MONGO_INITDB_ROOT_USERNAME=root
+    #   - MONGO_INITDB_ROOT_PASSWORD=root
+    volumes:
+      - mongo-db:/data/db
+    networks:
+      - blog-network
+
+volumes:
+  mongo-db:
+  node_modules:
+
+
+networks:
+  blog-network:
+    driver: bridge

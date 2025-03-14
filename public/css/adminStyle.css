@@ -1,0 +1,32 @@
+body {
+    background-color: #f4f6f9;
+}
+
+.admin-dashboard {
+    max-width: 1200px;
+    margin: 30px auto;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.user-status-blocked {
+    background-color: #fff3f3;
+    color: #721c24;
+}
+
+.modal-confirm .modal-content {
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.modal-confirm .modal-header {
+    border-bottom: none;
+    text-align: center;
+    justify-content: center;
+}
+
+.modal-confirm .modal-footer {
+    border-top: none;
+    justify-content: center;
+}

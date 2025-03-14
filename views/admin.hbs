@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Người Dùng</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/adminStyle.css"/>;
+</head>
+<body>
+    <div class="container-fluid admin-dashboard p-4">
+        <div class="row mb-4">
+            <div class="col-12">
+                <h2 class="text-center mb-4">
+                    <i class="bi bi-people-fill me-2"></i>Quản Lý Người Dùng
+                </h2>
+                
+                <!-- Thanh tìm kiếm và lọc -->
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="searchInput" placeholder="Tìm kiếm theo tên, email...">
+                            <button class="btn btn-primary" type="button">
+                                <i class="bi bi-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <div class="btn-group" role="group">
+                            <button class="btn btn-outline-secondary" id="filterAll">Tất cả</button>
+                            <button class="btn btn-outline-success" id="filterActive">Đang hoạt động</button>
+                            <button class="btn btn-outline-danger" id="filterBlocked">Đã khóa</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bảng quản lý người dùng -->
+                <div class="table-responsive">
+                    <table class="table table-hover" id="userTable">
+                        <thead class="table-light">
+                            <tr>
+                                <th>ID</th>
+                                <th>Tên</th>
+                                <th>Email</th>
+                                <th>Ngày đăng ký</th>
+                                <th>Trạng thái</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {{#each users}}
+                            <tr>
+                                <td>{{this.id}}</td>
+                                <td>{{this.username}}</td>
+                                <td>{{this.email}}</td>
+                                <td>{{formatCreateUserDate this.created_at}}</td>
+                                <td>
+                                    {{#if (eq this.block 0)}}
+                                    <span class="badge bg-success">Hoạt động</span>
+                                    {{else}}
+                                    <span class="badge bg-danger">Vô hiệu hóa</span>
+                                    {{/if}}
+                                </td>
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <button class="btn btn-sm btn-warning btn-reset-password" data-user-id={{this.id}}>
+                                            <i class="bi bi-key"></i> Reset MK
+                                        </button>
+                                        {{#if (eq this.block 0)}}
+                                        <button class="btn btn-sm btn-danger btn-block-user" data-user-id={{this.id}}>
+                                            <i class="bi bi-lock"></i> Khóa
+                                        </button>
+                                        {{else}}
+                                        <button class="btn btn-sm btn-success btn-block-user" data-user-id={{this.id}}>
+                                            <i class="bi bi-lock"></i> Mở khóa
+                                        </button>
+                                        {{/if}}
+                                    </div>
+                                </td>
+                            </tr>
+                        {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Phân trang -->
+                <nav aria-label="Phân trang người dùng">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1">Trước</a>
+                        </li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">Sau</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal xác nhận reset mật khẩu -->
+    <div class="modal fade" id="resetPasswordModal" tabindex="-1">
+        <div class="modal-dialog modal-confirm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Reset mật khẩu</h5>
+                </div>
+                <div class="modal-body text-center">
+                    <i class="bi bi-exclamation-circle text-warning" style="font-size: 70px;"></i>
+                    <p>Bạn có chắc chắn muốn reset mật khẩu cho người dùng này không?</p>
+                    <p>Mật khẩu mới sẽ được gửi qua email của người dùng.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-warning" id="confirmResetPassword">Xác nhận</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal xác nhận khóa người dùng -->
+    <div class="modal fade" id="blockUserModal" tabindex="-1">
+        <div class="modal-dialog modal-confirm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Khóa người dùng</h5>
+                </div>
+                <div class="modal-body text-center">
+                    <i class="bi bi-lock-fill text-danger" style="font-size: 70px;"></i>
+                    <p>Bạn có chắc chắn muốn khóa người dùng này không?</p>
+                    <p>Người dùng sẽ không thể truy cập hệ thống.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-danger" id="confirmBlockUser">Xác nhận</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS và Popper.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/handleAccountOperation.js"></script>
+    <script src="/js/handleLockAccount.js"></script>
+    <script src="/js/handleFilterOperation.js"></script>
+</body>
