@@ -1,29 +1,44 @@
-# Project: Flask-tiny-app
+# Project THI GIỮA KÌ: Nodejs-tiny-app
 
-Họ và tên: Phạm Gia Kiệt - 22662391
+Họ và tên: Phạm Văn Mạnh <br>
+MSSV : 22642071
 
-## Mô tả project
+Option : 1
 
-Project này mang tên là Flask-tiny-app, đây là 1 project "tiny" - đúng như cái tên. Cụ thể, project này tập trung vào việc tạo ra 1 blog cá nhân đơn giản (lấy cảm hứng từ các mạng xã hội hiện nay). Trên nền tảng này, mọi người có thể tạo ra và chỉnh sửa bài viết của mình, cũng như có thể xem được bài viết của những người khác.
+*Giới thiệu
 
-Bên cạnh đó, em cũng xây dựng 1 trang web dành cho admin nhằm giúp cho quản trị viên, người sáng lập ra nền tảng có thể quản lý user đang sử dụng nền tảng này.
+- Nodejs-tiny-app là một ứng dụng blog cá nhân đơn giản, cho phép người dùng tạo và chỉnh sửa bài viết của mình. Được thiết kế với ý tưởng từ các nền tảng mạng xã hội hiện đại, ứng dụng này cũng bao gồm một giao diện quản trị để quản lý người dùng và nội dung.
 
-Các công nghệ được sử dụng trong project này: - Frontend: HTML, CSS, Bootstrap, Handlebars (template view engine) - Backend: ExpressJS, SQLite
+- Công nghệ sử dụng
+  
++Frontend: HTML, CSS, Bootstrap, Handlebars
 
-## Cách cài đặt
++Backend: ExpressJS, sqlite
 
-1.Vào github repository: https://github.com/pgkiet27/ptud-gk-de-1.git
+- Cài đặt và Chạy ứng dụng:
 
-2. Nhấn vào nút Code (màu xanh) và copy đường dẫn HTTPS
++Bước 1: Clone Repo
 
-3. Trên máy tính, mở thư mục cần chứa project --> nhấn chuột phải và chọn Terminal
+Mở terminal và chuyển đến thư mục bạn muốn chứa project.
 
-4. Gõ câu lệnh `git clone [đường link mà bạn copy]`
+Sử dụng câu lệnh sau để clone repo: git clone https://github.com/pvmahn/ptud-gk-de-1.git
 
-5. Ta gõ `cd ptud-gk-de-1` để vào thư mục project
++Bước 2: Cài đặt Dependencies
 
-6. Tiếp tục gõ câu lệnh `npm install` để cài đặt tất cả các packages.
+Di chuyển vào thư mục project: cd ptud-gk-de-1
 
-7. Cuối cùng gõ `npm start` để chạy ứng dụng
+Cài đặt các gói cần thiết: npm install
 
-8. Truy cập vào `localhost:5500` để xem giao diện trang web
++Bước 3: Khởi chạy ứng dụng
+
+Khởi chạy server: npm start
+
+Mở trình duyệt và truy cập http://localhost:5500 để xem trang web.
+
+*Giao diện và Tính năng:
+
+- Trang Chủ: Hiển thị tất cả bài viết từ người dùng.
+
+- Trang Quản Trị: Cho phép quản lý bài viết và người dùng.
+  
+- Trang Cá Nhân: Người dùng có thể xem và chỉnh sửa các bài viết của mình.
