@@ -2,6 +2,7 @@
 
 Họ và tên: Phạm Văn Mạnh <br>
 MSSV : 22642071
+option : 1
 
 *Giới thiệu
 
