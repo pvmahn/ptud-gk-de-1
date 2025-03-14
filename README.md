@@ -1,14 +1,16 @@
 # Project: Flask-tiny-app
 
-Họ và tên: Phạm Văn Mạnh - 22642071
+Họ và tên: Phạm Văn Mạnh 
+MSSV : 22642071
 
 ## Mô tả project
 
-Project này mang tên là Flask-tiny-app, đây là 1 project "tiny" - đúng như cái tên. Cụ thể, project này tập trung vào việc tạo ra 1 blog cá nhân đơn giản (lấy cảm hứng từ các mạng xã hội hiện nay). Trên nền tảng này, mọi người có thể tạo ra và chỉnh sửa bài viết của mình, cũng như có thể xem được bài viết của những người khác.
+Project này mang tên là Flask-tiny-app, đây là 1 project "tiny". Cụ thể, project này tập trung vào việc tạo ra 1 blog cá nhân đơn giản (lấy cảm hứng từ các mạng xã hội hiện nay). Trên nền tảng này, các bạn có thể tạo ra và chỉnh sửa bài viết của mình, cũng như có thể xem được bài viết của những người khác.
 
-Bên cạnh đó, em cũng xây dựng 1 trang web dành cho admin nhằm giúp cho quản trị viên, người sáng lập ra nền tảng có thể quản lý user đang sử dụng nền tảng này.
+Bên cạnh đó, cũng xây dựng 1 trang web dành cho admin nhằm giúp cho quản trị viên, người sáng lập ra nền tảng có thể quản lý user đang sử dụng nền tảng này.
 
-Các công nghệ được sử dụng trong project này: - Frontend: HTML, CSS, Bootstrap, Handlebars (template view engine) - Backend: ExpressJS, SQLite
+Các công nghệ được sử dụng trong project này: - Frontend: HTML, CSS, Bootstrap, Handlebars (template view engine)
+- Backend: ExpressJS, sqlite
 
 ## Cách cài đặt
 
