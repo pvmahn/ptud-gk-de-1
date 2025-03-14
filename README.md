@@ -9,31 +9,31 @@ MSSV : 22642071
 
 - Công nghệ sử dụng
   
-Frontend: HTML, CSS, Bootstrap, Handlebars
++Frontend: HTML, CSS, Bootstrap, Handlebars
 
-Backend: ExpressJS, sqlite
++Backend: ExpressJS, sqlite
 
 - Cài đặt và Chạy ứng dụng:
 
-Bước 1: Clone Repo
++Bước 1: Clone Repo
 
 Mở terminal và chuyển đến thư mục bạn muốn chứa project.
 
 Sử dụng câu lệnh sau để clone repo: git clone https://github.com/pvmahn/ptud-gk-de-1.git
 
-Bước 2: Cài đặt Dependencies
++Bước 2: Cài đặt Dependencies
 
 Di chuyển vào thư mục project: cd ptud-gk-de-1
 
 Cài đặt các gói cần thiết: npm install
 
-Bước 3: Khởi chạy ứng dụng
++Bước 3: Khởi chạy ứng dụng
 
 Khởi chạy server: npm start
 
 Mở trình duyệt và truy cập http://localhost:5500 để xem trang web.
 
-Giao diện và Tính năng:
+*Giao diện và Tính năng:
 
 - Trang Chủ: Hiển thị tất cả bài viết từ người dùng.
 
